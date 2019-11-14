@@ -1,6 +1,8 @@
 let urls = {};
 
-document.body.onload = function () {
+getUrls();
+
+function getUrls() {
     chrome.storage.sync.get('urls', function (item) {
         if (!chrome.runtime.error) {
             log(item);
@@ -13,12 +15,15 @@ document.body.onload = function () {
             log(urls)
         }
     });
-};
+}
+
+function saveUrls() {
+    chrome.storage.sync.set({urls: urls});
+}
 
 
 function goto(e) {
     var str = e.target.dataset.url
-    log(str)
     for (var i = 0; i < str.length; i++) {
         if (str[i] === '*') {
             var variable = prompt("Variable " + i);
@@ -29,8 +34,15 @@ function goto(e) {
             str = str.replaceAt(i, variable)
         }
     }
-    chrome.tabs.create({ url: str });
+    chrome.tabs.create({url: str});
 };
+
+function removeItem(e) {
+
+    delete urls[e.target.dataset.key];
+    saveUrls();
+    getUrls();
+}
 
 document.getElementById("form").onsubmit = function (e) {
 
@@ -47,23 +59,47 @@ document.getElementById("form").onsubmit = function (e) {
     }
 
     urls[name] = url;
-    log(urls);
 
-    chrome.storage.sync.set({urls: urls});
-
+    saveUrls();
     renderUrls()
 };
 
 function renderUrls() {
+    const el = document.getElementById("data");
+    log('clear')
+    el.innerHTML = '';
+
     for (let i in urls) {
-        const element = document.createElement('a');
-        element.addEventListener('click', goto)
-        element.dataset['url'] = urls[i]
-        element.setAttribute('href', '#')
-        element.setAttribute('class', 'goto')
-        let newContent = document.createTextNode(urls[i]);
-        element.appendChild(newContent);
-        document.getElementById("data").appendChild(element).appendChild(document.createElement("br"));
+
+        const wrapper = document.createElement('div');
+        wrapper.setAttribute('class', 'wrapper');
+
+        const url = document.createElement('a');
+        url.addEventListener('click', goto);
+        url.dataset['url'] = urls[i];
+        url.setAttribute('href', '#');
+        url.setAttribute('class', 'goto');
+        url.appendChild(document.createTextNode(urls[i]));
+
+        const remove = document.createElement('button');
+        remove.addEventListener('click', removeItem);
+        remove.setAttribute('type', 'button');
+        remove.setAttribute('title', 'Remove');
+        remove.setAttribute('data-key', i);
+        remove.appendChild(document.createTextNode("X"));
+
+        const label = document.createElement('span');
+        label.setAttribute('class', 'label');
+        label.appendChild(document.createTextNode(i));
+
+
+        wrapper.appendChild(label);
+        wrapper.appendChild(url);
+        wrapper.appendChild(remove);
+
+
+
+        el.appendChild(wrapper);
     }
 }
 

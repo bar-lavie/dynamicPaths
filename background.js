@@ -5,5 +5,5 @@
 'use strict';
 
 chrome.runtime.onInstalled.addListener(function () {
-    console.log('app started')
+    console.log('app started');
 });
