@@ -17,9 +17,19 @@ document.body.onload = function () {
 
 
 function goto(e) {
-    for(let i in e.target.dataset.url){
-        console.log(i)
+    var str = e.target.dataset.url
+    log(str)
+    for (var i = 0; i < str.length; i++) {
+        if (str[i] === '*') {
+            var variable = prompt("Variable " + i);
+            if (variable == null || variable == "") {
+                alert('Variables not set for url');
+                return;
+            }
+            str = str.replaceAt(i, variable)
+        }
     }
+    chrome.tabs.create({ url: str });
 };
 
 document.getElementById("form").onsubmit = function (e) {
@@ -65,4 +75,9 @@ document.getElementById("clear-all").onclick = function () {
     chrome.storage.sync.set({urls: ''}, function () {
         log('All clear!');
     });
+};
+
+
+String.prototype.replaceAt = function (index, replacement) {
+    return this.substr(0, index) + encodeURI(replacement) + this.substr(index + 1);
 };
