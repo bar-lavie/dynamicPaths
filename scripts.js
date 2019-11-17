@@ -5,20 +5,13 @@ getUrls();
 function getUrls() {
     chrome.storage.sync.get('urls', function (item) {
         if (!chrome.runtime.error) {
-            log(item);
-            if (item.urls === '') {
-                log('no urls...');
+            if (Object.keys(item).length === 0 || item.urls === '') {
                 return
             }
             urls = item.urls;
-            renderUrls();
-            log(urls)
         }
+        renderUrls();
     });
-}
-
-function saveUrls() {
-    chrome.storage.sync.set({urls: urls});
 }
 
 
@@ -38,10 +31,9 @@ function goto(e) {
 };
 
 function removeItem(e) {
-
+    log('remove')
     delete urls[e.target.dataset.key];
-    saveUrls();
-    getUrls();
+    chrome.storage.sync.set({urls: urls}, renderUrls())
 }
 
 document.getElementById("form").onsubmit = function (e) {
@@ -58,17 +50,16 @@ document.getElementById("form").onsubmit = function (e) {
         return;
     }
 
-    urls[name] = url;
 
-    saveUrls();
-    renderUrls()
+    urls[name] = url;
+    chrome.storage.sync.set({urls: urls}, renderUrls())
 };
 
 function renderUrls() {
     const el = document.getElementById("data");
-    log('clear')
     el.innerHTML = '';
-
+    log('render')
+    log(urls)
     for (let i in urls) {
 
         const wrapper = document.createElement('div');
@@ -96,7 +87,6 @@ function renderUrls() {
         wrapper.appendChild(label);
         wrapper.appendChild(url);
         wrapper.appendChild(remove);
-
 
 
         el.appendChild(wrapper);
