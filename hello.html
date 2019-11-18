@@ -5,19 +5,22 @@
           href="style.css">
 </head>
 <body>
-<button id="clear-all" type="button">Clear all</button>
+<!--<button id="clear-all" type="button">Clear all</button>-->
 <form id="form">
     <label for="url">Enter
         URL</label>
     <input type="text"
            name="url"
            id="url">
+    <span class="tooltip">?</span>
     <button type="submit">
-        <span>ADD+</span>
+        <span>+</span>
     </button>
 </form>
-<u>Example:</u>
-<span>https://sandbox.sogo.co.il/*/wp-admin</span>
+<div class="instructions">
+    <p>Add an <u>astrix</u> where it supposed to be dynamic,</p>
+    <p>Example: https://websiteaddress.com/<span class="astrix"><span>*</span></span>/reports</p>
+</div>
 <div id="data"></div>
 <script src="./scripts.js"></script>
 </body>

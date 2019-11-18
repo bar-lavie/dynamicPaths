@@ -76,8 +76,11 @@ function renderUrls() {
         remove.addEventListener('click', removeItem);
         remove.setAttribute('type', 'button');
         remove.setAttribute('title', 'Remove');
+        remove.setAttribute('class', 'remove');
         remove.setAttribute('data-key', i);
-        remove.appendChild(document.createTextNode("X"));
+        let img = new Image(15);
+        img.src = './assets/trash.png';
+        remove.appendChild(img);
 
         const label = document.createElement('span');
         label.setAttribute('class', 'label');
@@ -97,12 +100,22 @@ function log(param) {
     chrome.extension.getBackgroundPage().console.log(param);
 }
 
-document.getElementById("clear-all").onclick = function () {
-    chrome.storage.sync.set({urls: ''}, function () {
-        log('All clear!');
-    });
-};
+// document.getElementById("clear-all").onclick = function () {
+//     chrome.storage.sync.set({urls: ''}, function () {
+//         log('All clear!');
+//     });
+// };
+document.getElementsByClassName("tooltip")[0].onclick = function (e) {
 
+    let element = document.getElementsByClassName("instructions")[0];
+    if (element.style.display === 'block') {
+        this.innerHTML = '?';
+        element.style.display = 'none';
+        return;
+    }
+    this.innerHTML = '-';
+    element.style.display = 'block'
+};
 
 String.prototype.replaceAt = function (index, replacement) {
     return this.substr(0, index) + encodeURI(replacement) + this.substr(index + 1);
