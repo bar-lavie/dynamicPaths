@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+
 :root {
     --color-1: #512DA8;
     --color-2: #00796B;
@@ -91,12 +92,14 @@ button[type="submit"] span {
     width: max-content;
     line-height: 1.5rem;
 }
-.instructions .astrix{
+
+.instructions .astrix {
     display: inline-block;
     width: 1rem;
     position: relative;
 
 }
+
 .instructions .astrix span {
     position: absolute;
     font-size: 2rem;
@@ -104,36 +107,53 @@ button[type="submit"] span {
     color: var(--color-2);
     line-height: 0;
 }
-#data{
+
+#data {
     height: 100%;
     overflow-y: scroll;
     padding: 1rem;
 }
-.wrapper{
+
+.wrapper {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom:1rem;
-}
-.label{
-    background-color: var(--color-2);
-    color:#fff;
-    padding: 0.25rem 0.5rem;
-    border-radius: 5px;
+    margin-bottom: 1rem;
 }
 
-.goto{
-    text-decoration: none;
-    font-size:1rem;
-    color: var(--color-3)
+.wrapper div {
+    display: flex;
+    align-items: center;
 }
-.remove{
+
+.label {
+    background-color: var(--color-2);
+    color: #fff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 5px;
+    margin-right: 0.5rem;
+}
+
+.goto {
+    text-decoration: none;
+    font-size: 1rem;
+    color: var(--color-3);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 275px;
+    display: inline-block;
+    overflow: hidden;
+}
+
+
+.remove {
+    line-height: 0;
     cursor: pointer;
     background-color: #FF5252;
-    border:0;
+    border: 0;
     outline: 0;
     border-radius: 5px;
-    padding:0.25rem;
+    padding: 0.25rem;
 }
 

@@ -19,7 +19,8 @@ function goto(e) {
     var str = e.target.dataset.url
     for (var i = 0; i < str.length; i++) {
         if (str[i] === '*') {
-            var variable = prompt("Variable " + i);
+            const visible = 8;
+            let variable = prompt(str.substr(i - visible, visible) + ' * ' + str.substr(i + 1, visible));
             if (variable == null || variable == "") {
                 alert('Variables not set for url');
                 return;
@@ -31,7 +32,6 @@ function goto(e) {
 };
 
 function removeItem(e) {
-    log('remove')
     delete urls[e.target.dataset.key];
     chrome.storage.sync.set({urls: urls}, renderUrls())
 }
@@ -58,8 +58,6 @@ document.getElementById("form").onsubmit = function (e) {
 function renderUrls() {
     const el = document.getElementById("data");
     el.innerHTML = '';
-    log('render')
-    log(urls)
     for (let i in urls) {
 
         const wrapper = document.createElement('div');
@@ -71,6 +69,7 @@ function renderUrls() {
         url.addEventListener('click', goto);
         url.dataset['url'] = urls[i];
         url.setAttribute('href', '#');
+        url.setAttribute('title', urls[i]);
         url.setAttribute('class', 'goto');
         url.appendChild(document.createTextNode(urls[i]));
 
@@ -110,7 +109,6 @@ function log(param) {
 //     });
 // };
 document.getElementsByClassName("tooltip")[0].onclick = function (e) {
-
     let element = document.getElementsByClassName("instructions")[0];
     if (element.style.display === 'block') {
         this.innerHTML = '?';
@@ -120,6 +118,11 @@ document.getElementsByClassName("tooltip")[0].onclick = function (e) {
     this.innerHTML = '-';
     element.style.display = 'block'
 };
+
+document.getElementsByClassName("goto").onmouseover = function (e) {
+    log(e)
+};
+
 
 String.prototype.replaceAt = function (index, replacement) {
     return this.substr(0, index) + encodeURI(replacement) + this.substr(index + 1);
