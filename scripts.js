@@ -65,6 +65,8 @@ function renderUrls() {
         const wrapper = document.createElement('div');
         wrapper.setAttribute('class', 'wrapper');
 
+        const div = document.createElement('div');
+
         const url = document.createElement('a');
         url.addEventListener('click', goto);
         url.dataset['url'] = urls[i];
@@ -79,6 +81,7 @@ function renderUrls() {
         remove.setAttribute('class', 'remove');
         remove.setAttribute('data-key', i);
         let img = new Image(15);
+        img.setAttribute('data-key', i);
         img.src = './assets/trash.png';
         remove.appendChild(img);
 
@@ -86,9 +89,10 @@ function renderUrls() {
         label.setAttribute('class', 'label');
         label.appendChild(document.createTextNode(i));
 
+        div.appendChild(label);
+        div.appendChild(url);
 
-        wrapper.appendChild(label);
-        wrapper.appendChild(url);
+        wrapper.appendChild(div);
         wrapper.appendChild(remove);
 
 
