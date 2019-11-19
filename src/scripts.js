@@ -16,21 +16,36 @@ function getUrls() {
 }
 
 
-function goto(e) {
-    var str = e.target.dataset.url
+async function goto(e) {
+    e.preventDefault();
+    let str = e.target.dataset.url;
     for (var i = 0; i < str.length; i++) {
+        str = await getVariable(str, i)
+    }
+    log(str)
+    // chrome.tabs.create({url: str});
+}
+
+
+function getVariable(str, i) {
+
+    return new Promise(resolve => {
         if (str[i] === '*') {
             const visible = 8;
-            let variable = prompt(str.substr(i - visible, visible) + ' * ' + str.substr(i + 1, visible));
-            if (variable == null || variable == "") {
-                alert('Variables not set for url');
-                return;
-            }
-            str = str.replaceAt(i, variable)
+            alertify.prompt(str.substr(i - visible, visible) + ' * ' + str.substr(i + 1, visible), '',
+                function (evt, variable) {
+                    if (variable == null || variable == "") {
+                        alertify.error('Variables not set for url');
+                        return
+                    }
+                    resolve(str.replaceAt(i, variable))
+                });
+        } else {
+            resolve(str)
         }
-    }
-    chrome.tabs.create({url: str});
-};
+    })
+}
+
 
 function removeItem(e) {
     delete urls[e.target.dataset.key];
@@ -62,7 +77,6 @@ document.getElementById("form").onsubmit = function (e) {
 };
 
 function renderUrls() {
-    log(urls)
     const el = document.getElementById("data");
     el.innerHTML = '';
     for (let i in urls) {
