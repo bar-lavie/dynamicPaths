@@ -38,18 +38,37 @@ function removeItem(e) {
 
 document.getElementById("form").onsubmit = function (e) {
 
-    const url = e.target[0].value;
+    let url = e.target[0].value;
     if (!url) {
-        alert('No url has entered!');
-        return;
+        Swal.fire({
+            customClass: 'swal-height',
+            heightAuto: false,
+            height: 300,
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Url is missing...',
+        });
+        return false;
     }
 
-    var name = prompt("Name of url:", "Sandbox wp-admin");
-    if (name == null || name == "") {
-        alert('Every url need a name...');
-        return;
-    }
+    let name = '';
 
+    Swal.fire({
+        customClass: 'swal-height',
+        heightAuto: false,
+        title: "Name of url:",
+        text: "Something like: Account edit",
+        input: 'text',
+        // showCancelButton: true,
+        // closeOnConfirm: false,
+        inputValidator: function (value) {
+            log(value);
+            if (value.length > 0) {
+                return 'Every url need a name...'
+            }
+            name = value
+        }
+    });
 
     urls[name] = url;
     chrome.storage.sync.set({urls: urls}, renderUrls())

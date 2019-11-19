@@ -157,3 +157,7 @@ button[type="submit"] span {
     padding: 0.25rem;
 }
 
+
+.swal-height {
+    height: 80vh;
+}
