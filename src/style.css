@@ -36,7 +36,7 @@ label {
     position: relative;
 }
 
-input[type="text"] {
+#form input[type="text"] {
     width: 100%;
     border-top: 0;
     border-left: 0;
@@ -46,7 +46,7 @@ input[type="text"] {
     border-bottom: 2px solid var(--color-1);
 }
 
-button[type="submit"] {
+#form button[type="submit"] {
     cursor: pointer;
     width: 50px;
     border: 0;
@@ -54,7 +54,7 @@ button[type="submit"] {
     background-color: var(--color-1);
 }
 
-button[type="submit"] span {
+#form button[type="submit"] span {
     font-size: 2rem;
     color: #fff;
 }
@@ -158,6 +158,3 @@ button[type="submit"] span {
 }
 
 
-.swal-height {
-    height: 80vh;
-}

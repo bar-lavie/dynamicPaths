@@ -1,4 +1,5 @@
 let urls = {};
+alertify.defaults.glossary.title = 'Dynamic Paths';
 
 getUrls();
 
@@ -38,45 +39,30 @@ function removeItem(e) {
 
 document.getElementById("form").onsubmit = function (e) {
 
+    e.preventDefault();
+
     let url = e.target[0].value;
     if (!url) {
-        Swal.fire({
-            customClass: 'swal-height',
-            heightAuto: false,
-            height: 300,
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Url is missing...',
-        });
+        alertify.error('Url is missing...');
         return false;
     }
 
-    let name = '';
-
-    Swal.fire({
-        customClass: 'swal-height',
-        heightAuto: false,
-        title: "Name of url:",
-        text: "Something like: Account edit",
-        input: 'text',
-        inputValidator: function (value) {
-            log('length');
-            log(value.length);
-            if (value.length > 0) {
-                return 'Every url needs a name...'
+    let that = this;
+    alertify.prompt("Give it a label, example: Account edit", '',
+        function (evt, name) {
+            if (name == null || name == "") {
+                alertify.error('Every url need a name...');
+                return
             }
-            name = value
-        }
-        // showCancelButton: true,
-        // closeOnConfirm: false,
-
-    });
-
-    urls[name] = url;
-    chrome.storage.sync.set({urls: urls}, renderUrls())
+            urls[name] = url;
+            chrome.storage.sync.set({urls: urls}, renderUrls())
+            alertify.success('Success, new url added');
+            that.reset()
+        });
 };
 
 function renderUrls() {
+    log(urls)
     const el = document.getElementById("data");
     el.innerHTML = '';
     for (let i in urls) {
