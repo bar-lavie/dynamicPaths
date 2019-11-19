@@ -59,15 +59,17 @@ document.getElementById("form").onsubmit = function (e) {
         title: "Name of url:",
         text: "Something like: Account edit",
         input: 'text',
-        // showCancelButton: true,
-        // closeOnConfirm: false,
         inputValidator: function (value) {
-            log(value);
+            log('length');
+            log(value.length);
             if (value.length > 0) {
-                return 'Every url need a name...'
+                return 'Every url needs a name...'
             }
             name = value
         }
+        // showCancelButton: true,
+        // closeOnConfirm: false,
+
     });
 
     urls[name] = url;
