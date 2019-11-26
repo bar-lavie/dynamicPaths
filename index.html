@@ -11,15 +11,19 @@
         URL</label>
     <input type="text"
            name="url"
-           id="url">
+           id="url"
+           placeholder="Type to search / add new url"
+           autocomplete="off">
     <span class="tooltip">?</span>
-    <button type="submit">
+    <button type="submit" title="Add URL">
         <span>+</span>
     </button>
 </form>
 <div class="instructions">
     <p>Add an <u>astrix</u> where it supposed to be dynamic,</p>
-    <p>Example: https://websiteaddress.com/<span class="astrix"><span>*</span></span>/reports</p>
+    <p>Example: websiteaddress.com/<span class="astrix"><span>*</span></span>/reports</p>
+    <br>
+    <p>*A URL can be edited by typing a new one with same label name</p>
 </div>
 <div id="data"></div>
 <script src="src/alertifyjs/alertify.min.js"></script>

@@ -5,7 +5,11 @@
   "manifest_version": 2,
   "browser_action": {
     "default_popup": "index.html",
-    "default_icon": "hello_extensions.png"
+    "default_icon": {
+      "16": "assets/icon.png",
+      "24": "assets/icon.png",
+      "32": "assets/icon.png"
+    }
   },
   "permissions": [
     "activeTab",
@@ -27,7 +31,7 @@
         "default": "Ctrl+Shift+F",
         "mac": "MacCtrl+Shift+F"
       },
-      "description": "Opens index.html"
+      "description": "Opens Dynamic Paths window"
     }
   }
 }

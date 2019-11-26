@@ -4,6 +4,7 @@
     --color-1: #512DA8;
     --color-2: #00796B;
     --color-3: #212121;
+    --color-4: #FF5252;
 }
 
 body {
@@ -133,6 +134,7 @@ label {
     padding: 0.25rem 0.5rem;
     border-radius: 5px;
     margin-right: 0.5rem;
+    text-transform: uppercase;
 }
 
 .goto {
@@ -150,7 +152,7 @@ label {
 .remove {
     line-height: 0;
     cursor: pointer;
-    background-color: #FF5252;
+    background-color: var(--color-4);
     border: 0;
     outline: 0;
     border-radius: 5px;
@@ -158,3 +160,6 @@ label {
 }
 
 
+.d-none {
+    display: none;
+}
