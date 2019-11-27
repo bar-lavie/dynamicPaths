@@ -135,6 +135,7 @@ label {
     border-radius: 5px;
     margin-right: 0.5rem;
     text-transform: uppercase;
+    cursor: pointer;
 }
 
 .goto {
@@ -161,5 +162,9 @@ label {
 
 
 .d-none {
+    display: none;
+}
+
+::-webkit-scrollbar {
     display: none;
 }

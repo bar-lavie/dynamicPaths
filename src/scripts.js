@@ -1,5 +1,5 @@
 let urls = {};
-alertify.defaults.glossary.title = 'Dynamic Paths';
+alertify.defaults.glossary.title = 'Dynamit';
 getUrls();
 const input = document.getElementById('url');
 input.focus();
@@ -14,6 +14,8 @@ input.addEventListener('keyup', function (e) {
         }
     }
 });
+
+// @TODO: ADD A SEARCH ARROW DOWN SEARCH AFTER LOOKUP
 
 function getUrls() {
     chrome.storage.sync.get('urls', function (item) {
@@ -37,6 +39,10 @@ async function goto(e) {
     }
     for (var i = 0; i < str.length; i++) {
         str = await getVariable(str, i)
+    }
+    const prefix = 'http://';
+    if (str.substr(0, prefix.length) !== prefix) {
+        str = prefix + str;
     }
     chrome.tabs.create({url: str});
 }
