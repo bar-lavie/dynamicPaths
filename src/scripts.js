@@ -25,6 +25,8 @@ document.addEventListener('keydown', function (e) {
             children.push(child);
         }
     }
+
+
     if (e.keyCode === 40) {
 
         if (selected) {
@@ -145,9 +147,12 @@ function removeItem(e) {
 
 document.getElementById("form").onsubmit = function (e) {
 
-    log(selected.getElementsByTagName('a'));
-
     e.preventDefault();
+
+    if (selected && !selected.classList.contains('d-none')) {
+        selected.getElementsByTagName('a')[0].click();
+        return;
+    }
 
     let url = e.target[0].value;
     if (!url) {
