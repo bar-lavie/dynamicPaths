@@ -5,7 +5,7 @@ const input = document.getElementById('url');
 input.focus();
 input.addEventListener('keyup', function (e) {
     let search = e.target.value;
-    const children = document.getElementById('data').children
+    const children = document.getElementById('data').children;
     for (let i = 0; i < children.length; i++) {
         let child = children[i];
         child.classList.add('d-none');
@@ -15,7 +15,70 @@ input.addEventListener('keyup', function (e) {
     }
 });
 
-// @TODO: ADD A SEARCH ARROW DOWN SEARCH AFTER LOOKUP
+let selected;
+document.addEventListener('keydown', function (e) {
+    const childrenHtml = document.getElementById('data').children;
+    let children = [];
+    for (let i = 0; i < childrenHtml.length; i++) {
+        let child = childrenHtml[i];
+        if (!child.className.includes('d-none')) {
+            children.push(child);
+        }
+    }
+    if (e.keyCode === 40) {
+
+        if (selected) {
+            selected.classList.remove('selected');
+            const next = getNextSibling(selected, ':not(.d-none)');
+            if (next) {
+                selected = next;
+            } else {
+                selected = children[0];
+            }
+            selected.classList.add('selected')
+        } else {
+            selected = children[0];
+            selected.classList.add('selected')
+        }
+
+    }
+
+    if (e.keyCode === 38) {
+        if (selected) {
+            selected.classList.remove('selected');
+            const next = getNextSibling(selected, ':not(.d-none)', true);
+            if (next) {
+                selected = next;
+            } else {
+                selected = children[children.length - 1];
+            }
+            selected.classList.add('selected')
+        } else {
+            selected = children[children.length - 1];
+            selected.classList.add('selected')
+        }
+    }
+
+});
+
+// https://gomakethings.com/finding-the-next-and-previous-sibling-elements-that-match-a-selector-with-vanilla-js/
+function getNextSibling(elem, selector, reverse = false) {
+
+    // Get the next sibling element
+    let sibling = reverse ? elem.previousElementSibling : elem.nextElementSibling;
+
+    // If there's no selector, return the first sibling
+    if (!selector) return sibling;
+
+    // If the sibling matches our selector, use it
+    // If not, jump to the next sibling and continue the loop
+    while (sibling) {
+        if (sibling.matches(selector)) return sibling;
+        sibling = reverse ? sibling.previousElementSibling : sibling.nextElementSibling
+    }
+
+};
+
 
 function getUrls() {
     chrome.storage.sync.get('urls', function (item) {
@@ -82,6 +145,8 @@ function removeItem(e) {
 
 document.getElementById("form").onsubmit = function (e) {
 
+    log(selected.getElementsByTagName('a'));
+
     e.preventDefault();
 
     let url = e.target[0].value;
@@ -109,7 +174,7 @@ function renderUrls() {
     el.innerHTML = '';
     for (let i in urls) {
 
-        const wrapper = document.createElement('div');
+        const wrapper = document.createElement('li');
         wrapper.setAttribute('class', 'wrapper');
         wrapper.setAttribute('data-key', i);
         wrapper.setAttribute('data-url', urls[i]);
