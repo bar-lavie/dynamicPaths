@@ -1,2 +1,0 @@
-If you work with the browser, this extension is for you!
-Dynamit allow you to go fast to your URL's by changing the URL parameters based on your choices!

@@ -105,11 +105,15 @@ async function goto(e) {
     for (var i = 0; i < str.length; i++) {
         str = await getVariable(str, i)
     }
-    const prefix = 'http://';
-    if (str.substr(0, prefix.length) !== prefix) {
-        str = prefix + str;
+
+    chrome.tabs.create({url: addhttp(str)});
+}
+
+function addhttp(url) {
+    if (!/^(?:f|ht)tps?\:\/\//.test(url)) {
+        url = "http://" + url;
     }
-    chrome.tabs.create({url: str});
+    return url;
 }
 
 function isUrl(str) {
@@ -223,9 +227,9 @@ function renderUrls() {
     input.focus();
 }
 
-function log(param) {
-    chrome.extension.getBackgroundPage().console.log(param);
-}
+// function log(param) {
+//     chrome.extension.getBackgroundPage().console.log(param);
+// }
 
 // document.getElementById("clear-all").onclick = function () {
 //     chrome.storage.sync.set({urls: ''}, function () {
@@ -243,9 +247,9 @@ document.getElementsByClassName("tooltip")[0].onclick = function (e) {
     element.style.display = 'block'
 };
 
-document.getElementsByClassName("goto").onmouseover = function (e) {
-    log(e)
-};
+// document.getElementsByClassName("goto").onmouseover = function (e) {
+//     log(e)
+// };
 
 
 String.prototype.replaceAt = function (index, replacement) {
