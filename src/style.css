@@ -123,7 +123,8 @@ label {
     margin-bottom: 1rem;
     padding: 0.5rem;
 }
-.wrapper.selected{
+
+.wrapper.selected {
     background-color: #eee;
 }
 
@@ -171,4 +172,32 @@ label {
 
 ::-webkit-scrollbar {
     display: none;
+}
+
+.ajs-header {
+    display: none;
+}
+
+.alertify-notifier {
+    font-size: 18px;
+    padding: 0;
+}
+
+.alertify-notifier .ajs-message {
+    padding: 10px !important;
+}
+
+.alertify-notifier .ajs-message.ajs-error {
+    background: var(--color-4);
+}
+
+.alertify-notifier .ajs-message.ajs-success {
+    background: var(--color-2);
+}
+
+.alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok {
+    color: var(--color-1);
+}
+.ajs-input, .ajs-dialog{
+    font-size: 18px;
 }
