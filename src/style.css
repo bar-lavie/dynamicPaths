@@ -5,6 +5,8 @@
     --color-2: #00796B;
     --color-3: #212121;
     --color-4: #FF5252;
+    --color-5: #EEE;
+    --color-6: #797979;
 }
 
 body {
@@ -113,6 +115,7 @@ label {
     height: 100%;
     overflow-y: scroll;
     padding: 1rem;
+    margin-bottom: 2rem;
 }
 
 .wrapper {
@@ -125,7 +128,7 @@ label {
 }
 
 .wrapper.selected {
-    background-color: #eee;
+    background-color: var(--color-5);
 }
 
 .wrapper div {
@@ -198,6 +201,33 @@ label {
 .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok {
     color: var(--color-1);
 }
-.ajs-input, .ajs-dialog{
+
+.ajs-input, .ajs-dialog {
     font-size: 18px;
+}
+
+.usage {
+    display: flex;
+    justify-content: space-evenly;
+    background: var(--color-5);
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2rem;
+}
+.usage span{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.usage span .icon{
+    margin-right:0.5rem;
+}
+.usage span .code{
+    margin-right:0.5rem;
+    background: var(--color-6);
+    color:white;
+    padding:0.25rem 0.5rem;
+    border-radius: 5px;
 }
